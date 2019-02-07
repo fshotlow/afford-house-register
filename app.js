@@ -8,19 +8,26 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/Users');
 var usersRouter = require('./routes/Users')
+var compression = require('compression');
+var helmet = require('helmet');
 
 var app = express();
+
+app.use(compression()); //Compress all routes
+app.use(helmet());
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 
-app.use(express.static(path.join(__dirname, “client/build”)))
+//app.use(express.static(path.join(__dirname, 'client/build/static')))
+
+app.use(express.static(`${__dirname}/client/build`));
 
 app.use(logger('dev'));
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+//app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -32,6 +39,17 @@ app.use('/users', usersRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+
+/*
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+*/
 
 // error handler
 app.use(function(err, req, res, next) {
