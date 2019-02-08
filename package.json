@@ -3,13 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon ./bin/www",
+    "dev": "NODE_ENV=DEVELOPMENT nodemon ./bin/www",
     "start": "node ./bin/www",
     "start:server": "node ./bin/www",
     "start:serverBabel": "nodemon ./bin/www --exec babel-node --presets es2015,stage-0",
     "start:client": "cd client && yarn start",
     "start:dev": "concurrently \"yarn dev\" \"yarn start:client\"",
-    "start:prod": "concurrently \"yarn start:server\" \"yarn start:client\""
+    
+    "start:build": "cd client && yarn build",
+    "start:prod": "concurrently \"yarn start:server\" \"yarn start:build\""
   },
   "dependencies": {
     "axios": "^0.18.0",
