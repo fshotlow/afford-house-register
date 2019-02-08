@@ -1,6 +1,6 @@
 # afford-house-register
 
-update .
+update .env with your information
 
 
 ## Deployment
